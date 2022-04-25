@@ -26,10 +26,16 @@ void printBlanks(char blanks[][255], int size)
 	}
 }
 
-int guess(char word[][255], char guess[][255])
+int guessLetter(char word[][255], char guess[][255])
 {
-	printf("%s", word[0]);
-	return 1;
+	for(int a = 0; a < strlen(word[0]); a++)
+	{
+		if(word[0][a] == guess[0][0])
+		{
+			return a;
+		}
+	}
+	return -1;
 }
 
 int main(void)
@@ -60,4 +66,6 @@ int main(void)
 
 	printf("\nGuess a letter.\n");
 	scanf("%s", guess[0]);
+
+	printf("%d", guessLetter(word, guess));
 }
