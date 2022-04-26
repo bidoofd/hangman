@@ -26,9 +26,9 @@ void printBlanks(char blanks[][255], int size)
 	}
 }
 
-int guessLetter(char word[][255], char guess[][255])
+int guessLetter(char word[][255], char guess[][255], int lastPos)
 {
-	for(int a = 0; a < strlen(word[0]); a++)
+	for(int a = lastPos; a < strlen(word[0]); a++)
 	{
 		if(word[0][a] == guess[0][0])
 		{
@@ -42,6 +42,8 @@ int main(void)
 {
 	char word[1][255];
 	char guess[1][255];
+	int flag = 0;
+	int count = 0;
 
 	printf("Enter a word for hangman.\n");
 	scanf("%s", word[0]);
@@ -67,5 +69,21 @@ int main(void)
 	printf("\nGuess a letter.\n");
 	scanf("%s", guess[0]);
 
-	printf("%d", guessLetter(word, guess));
+	int guessPos[strlen(word[0])];
+
+	for(int a = 0; a < strlen(word[0]); a++)
+	{
+		flag = guessLetter(word, guess, flag);
+		if(flag != -1)
+		{
+			guessPos[count] = flag;
+			count++;
+			flag = flag + 1;
+		}
+	}
+
+	for(int a = 0; a < count; a++)
+	{
+		printf("%d ", guessPos[a]);
+	}
 }
