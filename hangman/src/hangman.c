@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+//string lower
+
 static inline char *strlwr(char *str)
 {
 	unsigned char *p = (unsigned char *)str;
@@ -18,6 +20,8 @@ static inline char *strlwr(char *str)
 	 return str;
 }
 
+//prints blanks of word
+
 void printBlanks(char blanks[][255], int size)
 {
 	for(int a = 0; a < size * 2; a++)
@@ -25,6 +29,8 @@ void printBlanks(char blanks[][255], int size)
 		printf("%s", blanks[a]);
 	}
 }
+
+//returns postion of letter in the word
 
 int guessLetter(char word[][255], char guess[][255], int lastPos)
 {
@@ -37,6 +43,9 @@ int guessLetter(char word[][255], char guess[][255], int lastPos)
 	}
 	return -1;
 }
+
+//replaces the blanks with the letter guessed, IF
+//guess was a valid letter
 
 void replaceBlanks(char blanks[][255], char word[][255], int guessPos[], int size)
 {
@@ -51,16 +60,123 @@ void replaceBlanks(char blanks[][255], char word[][255], int guessPos[], int siz
 	}
 }
 
+//win condition for blanks
+
 int checkBlanks(char blanks[][255], int size)
 {
 	for(int a = 0; a < size * 2; a++)
 	{
-		if(strcmp(blanks[a], "_") == 0 || strcmp(blanks[a], " ") == 0)
+		if(strcmp(blanks[a], "_") == 0)
 		{
 			return 1;
 		}
 	}
 	return -1;
+}
+
+void stickman(int flag)
+{
+	if(flag == 0)
+	{
+		printf("\t\t ________\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		for(int a = 0; a < 8; a++)
+		{
+			printf("\t\t         |\n");
+		}
+		printf("\t\t    -----+-----\n");
+	}
+	else if(flag == 1)
+	{
+		printf("\t\t ________\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t\tO        |\n");
+		for(int a = 0; a < 7; a++)
+		{
+			printf("\t\t         |\n");
+		}
+		printf("\t\t    -----+-----\n");
+	}
+	else if(flag == 2)
+	{
+		printf("\t\t ________\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t\tO        |\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		for(int a = 0; a < 5; a++)
+		{
+			printf("\t\t         |\n");
+		}
+		printf("\t\t    -----+-----\n");
+	}
+	else if(flag == 3)
+	{
+		printf("\t\t ________\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t\tO        |\n");
+		printf("\t      \\ |        |\n");
+		printf("\t       \\|        |\n");
+		for(int a = 0; a < 5; a++)
+		{
+			printf("\t\t         |\n");
+		}
+		printf("\t\t    -----+-----\n");
+	}
+	else if(flag == 4)
+	{
+		printf("\t\t ________\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t\tO        |\n");
+		printf("\t      \\ | /      |\n");
+		printf("\t       \\|/       |\n");
+		for(int a = 0; a < 5; a++)
+		{
+			printf("\t\t         |\n");
+		}
+		printf("\t\t    -----+-----\n");
+	}
+	else if(flag == 5)
+	{
+		printf("\t\t ________\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t\tO        |\n");
+		printf("\t      \\ | /      |\n");
+		printf("\t       \\|/       |\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t       /         |\n");
+		printf("\t      /          |\n");
+		for(int a = 0; a < 3; a++)
+		{
+			printf("\t\t         |\n");
+		}
+		printf("\t\t    -----+-----\n");
+	}
+	else
+	{
+		printf("\t\t ________\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t\tO        |\n");
+		printf("\t      \\ | /      |\n");
+		printf("\t       \\|/       |\n");
+		printf("\t\t|        |\n");
+		printf("\t\t|        |\n");
+		printf("\t       / \\       |\n");
+		printf("\t      /   \\      |\n");
+		for(int a = 0; a < 3; a++)
+		{
+			printf("\t\t         |\n");
+		}
+		printf("\t\t    -----+-----\n");
+	}
 }
 
 int main(void)
@@ -69,7 +185,9 @@ int main(void)
 	char guess[1][255];
 	int flag = 0;
 	int flag2 = 0;
+	int flag3 = 0;
 	int count = 0;
+	int count2 = 0;
 
 	printf("Enter a word for hangman.\n");
 	scanf("%s", word[0]);
@@ -89,6 +207,8 @@ int main(void)
 			strcpy(blanks[a], " ");
 		}
 	}
+
+	stickman(flag3);
 
 	printBlanks(blanks, size);
 
@@ -111,16 +231,24 @@ int main(void)
 			else
 			{
 				guessPos[count] = flag;
+				count2++;
 			}
 		}
 		flag = 0;
 		count = 0;
+		if(count2 == flag3)
+		{
+			replaceBlanks(blanks, word, guessPos, size);
+			printBlanks(blanks, size);
+			printf("\nGuess a letter.\n");
+			scanf("%s", guess[0]);
+		}
+		else
+		{
+			flag3++;
+			stickman(flag3);
 
-		replaceBlanks(blanks, word, guessPos, size);
-		printBlanks(blanks, size);
-		printf("\nGuess a letter.\n");
-		scanf("%s", guess[0]);
-
+		}
 		flag2 = checkBlanks(blanks, size);
 	}
 }
